@@ -1,0 +1,8 @@
+parameters:
+    tipsOfTheDay: false
+    level: 8
+    paths:
+        - src
+        - tests
+    parallel:
+        maximumNumberOfProcesses: 1

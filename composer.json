@@ -1,0 +1,56 @@
+{
+    "name": "nedoto/laravel-client",
+    "description": "Nedoto Laravel HTTP Client provide access to the Nedoto HTTP APIs",
+    "keywords": [
+        "nedoto",
+        "remote-config",
+        "remote config"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nicola Saliu",
+            "email": "nsaliu@nedoto.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^11.2",
+        "illuminate/http": "^11.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.15",
+        "orchestra/testbench": "^9.0",
+        "phpunit/phpunit": "^11.0",
+        "phpstan/phpstan": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nedoto\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nedoto\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "pint": "vendor/bin/pint",
+        "phpunit": "vendor/bin/phpunit",
+        "phpstan": "vendor/bin/phpstan",
+        "quality": [
+            "pint",
+            "phpunit",
+            "phpstan"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nedoto\\NedotoServiceProvider"
+            ]
+        }
+    }
+}
