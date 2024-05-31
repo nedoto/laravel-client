@@ -1,0 +1,22 @@
+name: CI suite
+on:
+    push:
+        branches: [ "main", "develop" ]
+    pull_request:
+        branches: [ "main", "develop" ]
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+              with:
+                  php-version: '8.2'
+            - uses: actions/checkout@v4
+            - name: Install Dependencies
+              run: composer install --prefer-dist --no-progress --no-interaction --no-suggest --dev
+            - name: Execute laravel pint
+              run: composer pint -- --test
+            - name: Execute PHPUnit
+              run: composer phpunit
+            - name: Execute PHPStan
+              run: composer phpstan -- --no-progress

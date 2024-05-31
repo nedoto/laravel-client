@@ -1,6 +1,6 @@
 # Nedoto Laravel Client
 
-[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE) [![CI suite](https://github.com/nedoto/laravel-client/actions/workflows/ci.yml/badge.svg)](https://github.com/nedoto/laravel-client/actions/workflows/ci.yml)
 
 Laravel package to connect to Nedoto API.
 
@@ -13,7 +13,7 @@ This package requires `PHP >=8.1` and is built for `Laravel >=11.x` or higher.
 Installation with Composer:
 
 ```shell
-composer require nedoto/laravel-client
+composer require nedoto/laravel-client ^1.0
 ```
 
 Publish the package configuration:
