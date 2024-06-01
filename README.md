@@ -153,7 +153,7 @@ $configuration->getCreatedAt(); // ex. DateTimeImmutable
 By using the `getUpdatedAt()` you can access the update `DateTime` of the configuration.
 
 ```php
-$configuration->getCreatedAt(); // ex. DateTimeImmutable
+$configuration->getUpdatedAt(); // ex. DateTimeImmutable
 ```
 
 # Want to improve something?
