@@ -138,16 +138,24 @@ your configuration or variable, you should use the `getType()` method.
 $configuration->getType(); // ex. integer
 ```
 
-In this example you can simply cast to int the value from `getValue()`;
+You don't need to cast the value to the type you want, since the `getValue()` method will return the value already casted.
 
-### Access the creation date?
+### Access the creation date
 
 By using the `getCreatedAt()` you can access the creation `DateTime` of the configuration.
 
 ```php
-$configuration->getCreatedAt(); // ex. integer
+$configuration->getCreatedAt(); // ex. DateTimeImmutable
+```
+
+### Access the update date
+
+By using the `getUpdatedAt()` you can access the update `DateTime` of the configuration.
+
+```php
+$configuration->getCreatedAt(); // ex. DateTimeImmutable
 ```
 
 # Want to improve something?
 
-Please feel free to open a PR if you want to improve something on this package.
+Please feel free to open a PR if you want to improve something on this repository.
