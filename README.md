@@ -2,9 +2,13 @@
 
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE) [![CI suite](https://github.com/nedoto/laravel-client/actions/workflows/ci.yml/badge.svg)](https://github.com/nedoto/laravel-client/actions/workflows/ci.yml)
 
-Laravel package to connect to Nedoto API.
+A Laravel package to connect to the Nedoto API.
 
-Nedoto website: https://app.nedoto.com
+References:
+
+- Nedoto website: https://nedoto.com
+- Nedoto app website: https://app.nedoto.com
+- Nedoto documentation website: https://docs.nedoto.com
 
 ## Installation
 
@@ -22,20 +26,23 @@ Publish the package configuration:
 php artisan vendor:publish --tag=nedoto-laravel-client
 ```
 
-Open your `.env` configuration file and configure the `NEDOTO_API_KEY` using your api-key created
+Open your `.env` file and add the `NEDOTO_API_KEY` env var using your api-key created
 at [https://app.nedoto.com/api-keys](https://app.nedoto.com/api-keys).
 
 ```dotenv
 NEDOTO_API_KEY=<YOUR PROJECT ENV API-KEY>
 ```
 
+_Note:_ before start retrieving your configuration, be sure to enable the Project, Environment, Variable and Api key
+in https://app.nedoto.com.
+
 ## Usage
 
-To retrieve your configuration from Nedoto API you should add a reference to the `Nedoto\Client\NedotoClient` to you
-class and then
-use the Client to retrieve your configuration with the unique key.
+To retrieve your configuration or variable from Nedoto API you should add a reference to
+the `Nedoto\Client\NedotoClient` to you class and then use the Client to retrieve your configuration with the unique key
+that is the Variable `slug`.
 
-The `$response` object is of type `Nedoto\Client\Response` and with it, you can retrieve the `Nedoto\Configuration`
+As shown in the example below, the `$response` object is of type `Nedoto\Client\Response` and with it, you can retrieve the `Nedoto\Configuration`
 object.  
 From the Configuration object you can access your configuration value calling the `getValue()` method.
 
@@ -46,46 +53,49 @@ From the Configuration object you can access your configuration value calling th
 
     namespace YourNamespace;
 
+    // import the required namespaces 
     use Nedoto\Client\NedotoClient;
+    use Nedoto\Client\Request;
 
     final class MyClass
     {
         private NedotoClient $nedotoClient;
         
-        public function __construct(NedotoClient $nedotoClient)
+        public function __construct(NedotoClient $nedotoClient) // 1. inject Nedoto Client
         {
             $this->nedotoClient = $nedotoClient;
         }
     
         public function retrieveNedotoConfiguration(): string {
         
-            $request = new Request('my-configuration-key');
+            $request = new Request('my-configuration-key'); // 2. create a new Nedoto Request with the slug you want to retrieve as a mandatory parameter
             
-            $response = $this->nedotoClient->get($request);
+            $response = $this->nedotoClient->get($request); // 3. call the "get()" method on the Nedoto Client
             
-            return $response->getConfiguration()->getValue();
+            return $response->getConfiguration()->getValue(); // 4. retrieve your value from the Configuration object
         }
     }
 ```
 
 ## The Nedoto Response
 
-After you retrieve the configuration with the Nedoto client, you'll receive a `Nedoto\Client\Response`.
+After the call to the `get()` method, you'll receive a `Nedoto\Client\Response`.
 
-### Understand if everything is ok
+### Understand if the Nedoto response is ok
 
 To understand if everything went fine after retrieving your configuration, you should use the `getStatus()` method.  
-It will return a standard HTTP status.
+It will return a standard HTTP status code.
 
 ```php
 $response->getStatus(); // ex. 200
 ```
 
-Alternatively you could you use the `failed()` method that will inform you if there was a failure by returning a boolean
-value if the HTTP status is different from 200 (HTTP OK).
+Alternatively you could you use the `failed()` method that will inform you if there was a failure by returning
+a `boolean`
+value if the HTTP status code is different from `200` (HTTP OK).
 
 ```php
-$response->failed(); // ex. true (if HTTP status is different from 200)
+$response->failed(); // ex. true (if HTTP status code is different from 200)
 ```
 
 ### Understand the errors
@@ -97,7 +107,7 @@ For this you could use the `getErrors()` method.
 $response->getErrors();
 ```
 
-`getErrors()` method will return an array of reasons explaining why:
+The `getErrors()` method will return an array of reasons explaining what's wrong with the request.
 
 ```php
 [
@@ -118,7 +128,7 @@ $response->getConfiguration(); // return Nedoto\Configuration
 
 ## Reading you configuration
 
-After you have your Nedoto\Configuration object you can access different information.
+After you have your `Nedoto\Configuration` object you can access different information explained below.
 
 ### Retrieve the value
 
@@ -126,31 +136,36 @@ Probably the most important thing to read in your configuration is actually the 
 To do that you should simply use the `getValue()` method.
 
 ```php
-$configuration->getValue(); // ex: 100
+$configuration->getValue(); // ex: it returns the value of the configuration defined in one of the variables at https://app.nedoto.com/variables
 ```
+
+_Note:_ the `getValue()` method will return the value already casted to the type you defined in the variable
+in https://app.nedoto.com/variables.
 
 ### Understand the type
 
-Since Nedoto gives you the possibility to define the `type` of your configuration or variable, in order to correctly parse
-your configuration or variable, you should use the `getType()` method.
+Since Nedoto gives you the possibility to define the `type` of your configuration or variable you can retrieve it using
+the `getType()` method.
 
 ```php
 $configuration->getType(); // ex. integer
 ```
 
-You don't need to cast the value to the type you want, since the `getValue()` method will return the value already casted.
+_Note:_ You don't need to cast the value to the type you want, since the `getValue()` method will return the value
+already
+casted.
 
 ### Access the creation date
 
-By using the `getCreatedAt()` you can access the creation `DateTime` of the configuration.
+By using the `getCreatedAt()` you can access the creation date of the configuration.
 
 ```php
-$configuration->getCreatedAt(); // ex. DateTimeImmutable
+$configuration->getCreatedAt(); // DateTimeImmutable
 ```
 
 ### Access the update date
 
-By using the `getUpdatedAt()` you can access the update `DateTime` of the configuration.
+By using the `getUpdatedAt()` you can access the update date of the configuration.
 
 ```php
 $configuration->getUpdatedAt(); // ex. DateTimeImmutable
