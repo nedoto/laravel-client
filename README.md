@@ -38,6 +38,36 @@ in https://app.nedoto.com.
 
 ## Usage
 
+You can choose between using the Facade or injecting the Nedoto client to retrieve your configuration.  
+Continue reading to understand how to use both.
+
+### Using the Facade
+
+You can use the `NedotoClientFacade` facade to retrieve your configuration or variable from Nedoto API.
+
+```php
+<?php
+
+    declare(strict_types=1);
+
+    namespace YourNamespace;
+
+    // import the required namespaces 
+    use Nedoto\Facades\NedotoClientFacade;
+
+    final class MyClass
+    {
+        public function retrieveNedotoConfiguration(): string {
+            
+            $response = NedotoClientFacade::get('my-slug'); // 1. call the "get()" method of the Nedoto facade with the slug you want to retrieve as a mandatory parameter
+            
+            return $response->getConfiguration()->getValue(); // 2. retrieve your value from the Configuration object
+        }
+    }
+```
+
+### Inject the Nedoto client
+
 To retrieve your configuration or variable from Nedoto API you should add a reference to
 the `Nedoto\Client\NedotoClient` to you class and then use the Client to retrieve your configuration with the unique key
 that is the Variable `slug`.
@@ -67,12 +97,10 @@ From the Configuration object you can access your configuration value calling th
         }
     
         public function retrieveNedotoConfiguration(): string {
-        
-            $request = new Request('my-configuration-key'); // 2. create a new Nedoto Request with the slug you want to retrieve as a mandatory parameter
             
-            $response = $this->nedotoClient->get($request); // 3. call the "get()" method on the Nedoto Client
+            $response = $this->nedotoClient->get('my-slug'); // 2. call the "get()" method on the Nedoto Client with the slug you want to retrieve as a mandatory parameter
             
-            return $response->getConfiguration()->getValue(); // 4. retrieve your value from the Configuration object
+            return $response->getConfiguration()->getValue(); // 3. retrieve your value from the Configuration object
         }
     }
 ```
