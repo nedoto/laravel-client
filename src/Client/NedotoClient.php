@@ -13,7 +13,7 @@ use Nedoto\Configuration;
 
 class NedotoClient
 {
-    private const NEDOTO_ENDPOINT = 'http://app.nedoto.com/api/var/get';
+    private const NEDOTO_ENDPOINT = 'https://app.nedoto.com/api/var/get';
 
     private Factory $httpClient;
 
@@ -27,9 +27,13 @@ class NedotoClient
         $this->apiKey = $apiKey;
     }
 
-    public function get(Request $request): Response
+    public function get(string $slug): Response
     {
-        $response = $this->getFromApi($request);
+        if (mb_strlen($slug) === 0) {
+            throw new InvalidArgumentException('$slug cannot be an empty string.');
+        }
+
+        $response = $this->getFromApi($slug);
 
         if ($response->failed()) {
             return new Response(
@@ -54,7 +58,7 @@ class NedotoClient
         );
     }
 
-    private function getFromApi(Request $request): HttpResponse
+    private function getFromApi(string $slug): HttpResponse
     {
         return $this->httpClient
             ->withHeaders([
@@ -64,7 +68,7 @@ class NedotoClient
                 sprintf(
                     '%s/%s',
                     self::NEDOTO_ENDPOINT,
-                    $request->getConfigurationName()
+                    trim($slug)
                 )
             );
     }

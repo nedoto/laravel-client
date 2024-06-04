@@ -50,6 +50,9 @@
         "laravel": {
             "providers": [
                 "Nedoto\\NedotoServiceProvider"
+            ],
+            "aliases": [
+                "Nedoto\\Facades\\NedotoClientFacade"
             ]
         }
     }

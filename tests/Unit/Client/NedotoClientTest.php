@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Response as HttpResponse;
 use Nedoto\Client\NedotoClient;
-use Nedoto\Client\Request;
 use Nedoto\Client\Response;
 use Nedoto\Configuration;
 use Nedoto\Tests\TestCase;
@@ -29,6 +28,23 @@ class NedotoClientTest extends TestCase
         $this->httpClient = new Factory();
     }
 
+    public function testGetMustThrowExceptionWhenSlugIsEmpty(): void
+    {
+        $this->httpClient->fake([
+            '*' => null,
+        ]);
+
+        $this->sut = new NedotoClient(
+            $this->httpClient,
+            'api-key'
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('$slug cannot be an empty string.');
+
+        $this->sut->get('');
+    }
+
     /**
      * @param  array<string, array<string, array<string, string|int|float|bool>>>  $validResponse
      */
@@ -44,7 +60,7 @@ class NedotoClientTest extends TestCase
             'api-key'
         );
 
-        $response = $this->sut->get(new Request('test'));
+        $response = $this->sut->get('test');
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(Configuration::class, $response->getConfiguration());
@@ -73,7 +89,7 @@ class NedotoClientTest extends TestCase
             'api-key'
         );
 
-        $response = $this->sut->get(new Request('test'));
+        $response = $this->sut->get('test');
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertNull($response->getConfiguration());
@@ -101,7 +117,7 @@ class NedotoClientTest extends TestCase
             'api-key'
         );
 
-        $response = $this->sut->get(new Request('test'));
+        $response = $this->sut->get('test');
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertNull($response->getConfiguration());
