@@ -13,7 +13,7 @@ use Nedoto\Configuration;
 
 class NedotoClient
 {
-    private const NEDOTO_ENDPOINT = 'https://app.nedoto.com/api/var/get';
+    private const NEDOTO_ENDPOINT = 'https://app.nedoto.com/api/get';
 
     private Factory $httpClient;
 

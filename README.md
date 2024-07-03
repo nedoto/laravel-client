@@ -33,7 +33,7 @@ at [https://app.nedoto.com/api-keys](https://app.nedoto.com/api-keys).
 NEDOTO_API_KEY=<YOUR PROJECT ENV API-KEY>
 ```
 
-_Note:_ before start retrieving your configuration, be sure to enable the Project, Environment, Variable and Api key
+_Note:_ before start retrieving your configuration, be sure to enable the Project, Environment, Configuration and Api key
 in https://app.nedoto.com.
 
 ## Usage
@@ -43,7 +43,7 @@ Continue reading to understand how to use both.
 
 ### Using the Facade
 
-You can use the `NedotoClientFacade` facade to retrieve your configuration or variable from Nedoto API.
+You can use the `NedotoClientFacade` facade to retrieve your configuration from Nedoto API.
 
 ```php
 <?php
@@ -68,9 +68,9 @@ You can use the `NedotoClientFacade` facade to retrieve your configuration or va
 
 ### Inject the Nedoto client
 
-To retrieve your configuration or variable from Nedoto API you should add a reference to
+To retrieve your configuration from Nedoto API you should add a reference to
 the `Nedoto\Client\NedotoClient` to you class and then use the Client to retrieve your configuration with the unique key
-that is the Variable `slug`.
+that is the variable `slug`.
 
 As shown in the example below, the `$response` object is of type `Nedoto\Client\Response` and with it, you can retrieve the `Nedoto\Configuration`
 object.  
@@ -164,15 +164,15 @@ Probably the most important thing to read in your configuration is actually the 
 To do that you should simply use the `getValue()` method.
 
 ```php
-$configuration->getValue(); // ex: it returns the value of the configuration defined in one of the variables at https://app.nedoto.com/variables
+$configuration->getValue(); // ex: it returns the value of the configuration defined in one of the configurations at https://app.nedoto.com/configurations
 ```
 
-_Note:_ the `getValue()` method will return the value already casted to the type you defined in the variable
-in https://app.nedoto.com/variables.
+_Note:_ the `getValue()` method will return the value already casted to the type you defined in the configuration
+in https://app.nedoto.com/configurations.
 
 ### Understand the type
 
-Since Nedoto gives you the possibility to define the `type` of your configuration or variable you can retrieve it using
+Since Nedoto gives you the possibility to define the `type` of your configuration you can retrieve it using
 the `getType()` method.
 
 ```php
