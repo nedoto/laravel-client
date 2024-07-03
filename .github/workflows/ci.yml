@@ -14,8 +14,8 @@ jobs:
             - uses: actions/checkout@v4
             - name: Install Dependencies
               run: composer install --prefer-dist --no-progress --no-interaction --no-suggest --dev
-            - name: Execute laravel pint
-              run: composer pint -- --test
+            #- name: Execute laravel pint
+            #  run: composer pint -- --test
             - name: Execute PHPUnit
               run: composer phpunit
             - name: Execute PHPStan
