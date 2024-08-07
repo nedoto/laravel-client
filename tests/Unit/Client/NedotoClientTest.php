@@ -370,7 +370,7 @@ class NedotoClientTest extends TestCase
                 ],
             ],
             [
-                'The variable.data.value must be one of these types: int, float, bool, string "array" given.',
+                'The variable.data.value must be one of these types: string, int, float, bool, code, json, html "array" given.',
             ],
         ];
 

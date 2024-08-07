@@ -126,7 +126,7 @@ class NedotoClient
             'variable' => 'required|array:data',
             'variable.data' => 'required|array:slug,type,value,created_at,updated_at',
             'variable.data.slug' => 'required|string',
-            'variable.data.type' => 'required|string|in:string,int,float,bool,code,html',
+            'variable.data.type' => 'required|string|in:string,int,float,bool,code,json,html',
             'variable.data.created_at' => 'required|date',
             'variable.data.updated_at' => 'required|date',
             'variable.data.value' => ['required', function (string $attribute, mixed $value, \Closure $fail) {
@@ -138,7 +138,7 @@ class NedotoClient
                 ) {
                     $fail(
                         sprintf(
-                            'The variable.data.value must be one of these types: int, float, bool, string "%s" given.',
+                            'The variable.data.value must be one of these types: string, int, float, bool, code, json, html "%s" given.',
                             gettype($value)
                         )
                     );
